@@ -1,0 +1,18 @@
+<?xml version="1.0" ?>
+<Level>
+	<Resources>
+		<Factories>			
+			<Factory type="Player"/>
+		</Factories>
+		<Sprites>
+			<Sprite name="Player" file = "./Images/t_player.png" width="16" height="27"/>	
+		</Sprites>
+		<PhysicsDefinitions>
+			<Definition name="Player" type="dynamic" shape="circle" density="1.0f" restitution="0.3f" angDamp="10.0f" linDamp="3.0f" angForce="1.0f" linForce="0.2f"/>
+		</PhysicsDefinitions>
+	</Resources>
+	<Layout>
+    		<!-- Object Layout for Game 	-->
+    	<GameAsset name="Player" x="100.0f" y="-200.0f"angle="0.0f"/>
+	</Layout>
+</Level>

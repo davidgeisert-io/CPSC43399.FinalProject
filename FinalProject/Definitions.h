@@ -1,0 +1,24 @@
+#ifndef DEFINITIONS_H
+#define DEFINITIONS_H
+
+#define DIRECTINPUT_VERSION 0x0800
+
+#include <d3d9.h>
+#include <d3dx9.h>
+#include <dinput.h>
+
+typedef LPDIRECT3DDEVICE9 GAME_DEVICE;
+typedef LPDIRECT3D9 GAME_GRAPHICS;
+
+typedef D3DXVECTOR3 GAME_VECTOR;
+
+typedef D3DCOLOR GAME_COLOR;
+typedef LPDIRECT3DTEXTURE9 GAME_TEXTURE;
+typedef LPD3DXSPRITE GAME_SPRITE;
+typedef D3DXMATRIX GAME_MATRIX;
+typedef D3DXMATRIX GAME_MATRIX;
+
+typedef IDirectInput8* GAME_INPUT_PTR;
+typedef IDirectInputDevice8* GAME_KEYBOARD_PTR;
+
+#endif
