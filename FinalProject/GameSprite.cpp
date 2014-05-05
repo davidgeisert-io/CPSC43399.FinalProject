@@ -26,8 +26,9 @@ GameSprite::~GameSprite()
     }
 }
 
-bool GameSprite::Initialize(LPDIRECT3DDEVICE9 device, std::string filePath, int width, int height)
+bool GameSprite::Initialize(std::string id, LPDIRECT3DDEVICE9 device, std::string filePath, int width, int height)
 {
+	this->id = id;
     this->width = width;
     this->height = height;
 
@@ -82,4 +83,14 @@ void GameSprite::Draw(float gameTime, View* gameView, b2Body* body)
 
     sprite->Draw(tex, NULL, NULL, NULL, color);
     sprite->End();
+}
+
+void GameSprite::SetNextSprite(GameSprite* sprite)
+{
+	this->nextSprite = sprite;
+}
+
+void GameSprite::SetPreviousSprite(GameSprite* sprite)
+{
+	this->previousSprite = sprite;
 }

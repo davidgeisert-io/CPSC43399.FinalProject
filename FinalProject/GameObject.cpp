@@ -12,7 +12,8 @@ GameObject::GameObject()
 	pLibrary = NULL;
     physics = NULL;
 	body = NULL;
-	initialized = false;	
+	sprite = NULL;
+	initialized = false;
 	dead = false;
 }
 
@@ -55,11 +56,6 @@ void GameObject::KillObject(bool isdead)
 	this->dead = isdead;
 }
 
-void GameObject::SetSprite(std::string key)
-{
-	this->sprite = aLibrary->Search(key);
-}
-
 bool GameObject::Initialize(std::string key, InputDevice* iDevice, std::vector<GameObject*>* objects, GameAssetLibrary* gLibrary, ArtAssetLibrary* aLibrary, PhysicsAssetLibrary* pLibrary, 
 							b2World* world, float x, float y, float angle)
 {
@@ -70,7 +66,7 @@ bool GameObject::Initialize(std::string key, InputDevice* iDevice, std::vector<G
 	this->aLibrary = aLibrary;
 	this->pLibrary = pLibrary;
 
-    this->sprite = aLibrary->Search(key);
+    this->spriteContainer = aLibrary->Search(key);
 
 	this->physics = pLibrary->Search(key);
 	this->world = world;
@@ -126,4 +122,10 @@ bool GameObject::PostInitialize()
 bool GameObject::IsInitialized()
 {
     return this->initialized;
+}
+
+
+void GameObject::CycleSprite()
+{
+
 }

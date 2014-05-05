@@ -1,6 +1,6 @@
 #include "Game.h"
 
-Game::Game():gravity(0,0)
+Game::Game():gravity(0,5)
 {
 	gDevice=NULL;
 	iDevice=NULL;
@@ -95,15 +95,21 @@ bool Game::Initialize(HWND hWnd, HINSTANCE hInstance, int width, int height)
 		return false;
 	}
 
+
 	gameView = new View();
 	if(!gameView->Initialize(640, 360, 0.0f))
 	{
 		return false;
-	}
+	}	
+
 
 	world = new b2World(gravity);
-	int frameWidth = 8;
-	int tabWidth = 30;
+
+	boundary = new Boundary();
+	if(!boundary->Initialize(gameView, world, width, height))
+	{
+		return false;
+	}
 
 	debugDraw = new Box2DDebugDraw();
 	if(debugDraw->Initialize(gDevice->GetDevice(), gameView))

@@ -17,7 +17,7 @@ GameObject* Player::Update(float gameTime)
 		charge++;
 	}
 
-	if(iDevice->IsAPressed())
+	/*if(iDevice->IsAPressed())
 	{
 		body->SetAngularVelocity(body->GetAngularVelocity()-physics->GetAngForce());
 	}
@@ -25,24 +25,22 @@ GameObject* Player::Update(float gameTime)
 	if(iDevice->IsDPressed())
 	{
 		body->SetAngularVelocity(body->GetAngularVelocity()+physics->GetAngForce());
+	}*/
+
+	if(iDevice->IsDPressed())
+	{
+		b2Vec2 force;
+		force.x = body->GetPosition().x + RW2PW(8.0f);
+		force.y = body->GetPosition().y;
+		body->SetTransform(force, body->GetAngle());
 	}
 
-	if(iDevice->IsWPressed())
+	if(iDevice->IsAPressed())
 	{
-		float angle = body->GetAngle();
 		b2Vec2 force;
-		force.x=cos(angle-3.14159f/2.0f) * physics->GetLinForce();
-		force.y=sin(angle-3.14159f/2.0f) * physics->GetLinForce();
-		body->ApplyForce(force,body->GetPosition(), true);
-	}
-
-	if(iDevice->IsSPressed())
-	{
-		float angle = body->GetAngle();
-		b2Vec2 force;
-		force.x=cos(angle+3.14159f/2.0f) * physics->GetLinForce();
-		force.y=sin(angle+3.14159f/2.0f) * physics->GetLinForce();
-		body->ApplyForce(force,body->GetPosition(), true);
+		force.x = body->GetPosition().x - RW2PW(8.0f);
+		force.y = body->GetPosition().y;
+		body->SetTransform(force, body->GetAngle());
 	}
 
 	if((iDevice->IsSpacePressed()) & (charge>=chargeTime))
@@ -94,8 +92,19 @@ GameObject* Player::Fire()
 	return NULL;
 }
 
+bool Player::PostInitialize()
+{
+	return true;
+}
+
+
 
 void Player::Draw(float gameTime, View* view)
 {
     sprite->Draw(0.0f, view, body);
+}
+
+void Player::CycleSprite()
+{
+
 }

@@ -10,10 +10,19 @@
 #include "GameSprite.h"
 #include "Definitions.h"
 #include "GamePhysics.h"
+#include "SpriteContainer.h"
 
 class GameAssetLibrary;
 class ArtAssetLibrary;
 class PhysicsAssetLibrary;
+
+enum Direction
+{
+	leftMoving,
+	leftStanding,
+	rightMoving,
+	rightStanding
+};
 
 class GameObject
 {
@@ -28,13 +37,13 @@ public:
 	bool IsDead();
 	std::string GetId();
 	void KillObject(bool);	
-	void SetSprite(std::string key);
     
     bool Initialize(std::string key, InputDevice* iDevice, std::vector<GameObject*>* objects, GameAssetLibrary* gLibrary, ArtAssetLibrary* aLibrary, PhysicsAssetLibrary* pLibrary, 
 		b2World* world, float x, float y, float angle);
 
 	virtual bool PostInitialize();
-	
+	virtual void CycleSprite();
+
 	bool IsInitialized();	
 
     virtual GameObject* Update (float gameTime) = NULL;
@@ -54,8 +63,9 @@ protected:
 	std::string id;
 	bool dead;
 
+	SpriteContainer* spriteContainer;
 	GameSprite* sprite;
-
+	Direction direction;
 	b2Body* body;
 	
 };

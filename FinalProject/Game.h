@@ -12,6 +12,7 @@
 #include "InputDevice.h"
 #include "GameContactListener.h"
 #include "Box2DDebugDraw.h"
+#include "Boundary.h"
 
 class Game
 {
@@ -56,7 +57,8 @@ private:
     bool initialized;
 	GameContactListener gcl;
 	Box2DDebugDraw* debugDraw;
-	
+	Boundary* boundary;
+
 	void TogglePause();
 };
 

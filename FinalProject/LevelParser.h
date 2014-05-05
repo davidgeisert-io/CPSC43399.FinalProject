@@ -18,9 +18,7 @@ class LevelParser
 {
 
 public:
-    ~LevelParser();
     void Load(const char* fileName, std::vector<GameObject*>* gameObjects, InputDevice* iDevice, GameAssetLibrary* gameAssets, ArtAssetLibrary* artAsset, PhysicsAssetLibrary* pLibrary, b2World* world);
-    
 };
 
 #endif

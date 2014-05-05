@@ -18,15 +18,25 @@ public:
 
     ~GameSprite();
 
-    bool Initialize(LPDIRECT3DDEVICE9 device, std::string filePath, int width, int height);
+    bool Initialize(std::string id, LPDIRECT3DDEVICE9 device, std::string filePath, int width, int height);
     bool IsInitialized();
 	float GetWidth(){ return this->width;}
 	float GetHeight(){ return this->height;}
     virtual void Draw(float gameTime, View* gameView, b2Body* body);
 
+	void SetPreviousSprite(GameSprite* sprite);
+	void SetNextSprite(GameSprite* sprite);
+
+	GameSprite* GetNextSprite() {return nextSprite;}
+	GameSprite* GetPreviousSprite() {return previousSprite;}
+	std::string GetId() {return id;}
+
 private:
+	std::string id;
     LPDIRECT3DTEXTURE9 tex;
     LPD3DXSPRITE sprite;
+	GameSprite* nextSprite;
+	GameSprite* previousSprite;
 
     float angle;
     float scale;

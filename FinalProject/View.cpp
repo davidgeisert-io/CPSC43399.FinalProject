@@ -35,19 +35,17 @@ void View::Update(float GameTime, InputDevice* iDevice)
 {
     if(iDevice->IsLeftArrowPressed())
     {
-        //outsource to xml
-        angle -= 0.02f;
+        position.x -= 2.0f;
     }
 
     if(iDevice->IsRightArrowPressed())
     {
-        //outsource to xml
-        angle += .02f;
+        position.x += 2.0f;
     }
 
     if(iDevice->IsUpArrowPressed() || iDevice->IsDownArrowPressed())
     {
-        //outsource to xml
+        
         D3DXVECTOR3 XCoord;
         XCoord.x = 0.0;
         XCoord.y = -1.0;
@@ -62,8 +60,8 @@ void View::Update(float GameTime, InputDevice* iDevice)
         float scale = 3.0;
         RotCoord *= scale;
 
-        position = iDevice->IsUpArrowPressed() ? 
-            position + RotCoord 
+        position = iDevice->IsUpArrowPressed() 
+			? position + RotCoord 
             : position - RotCoord;
 
     }

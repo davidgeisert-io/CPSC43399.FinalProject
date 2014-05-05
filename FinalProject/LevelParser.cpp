@@ -1,11 +1,5 @@
 #include "LevelParser.h"
 
-
-LevelParser::~LevelParser()
-{
-
-}
-
 void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjects, InputDevice* iDevice, GameAssetLibrary* gameAssets, ArtAssetLibrary* artAssets, PhysicsAssetLibrary* pLibrary, b2World* world)
 {
     TiXmlDocument doc(fileName);
@@ -28,17 +22,30 @@ void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjec
 			gameAssets->Insert(name);
 		}
 
-		TiXmlElement* spriteNode = resourceRoot.FirstChild("Sprites").FirstChild().Element();
-		for(spriteNode; spriteNode; spriteNode= spriteNode->NextSiblingElement())
+		TiXmlElement* animationNode = resourceRoot.FirstChild("Animations").FirstChild().Element();
+		for(animationNode; animationNode; animationNode= animationNode->NextSiblingElement())
 		{
-			const char *name = spriteNode->Attribute("name"); 
-			const char *dir = spriteNode->Attribute("file");
-			float width, height;
-			spriteNode->QueryFloatAttribute("width", &width);
-			spriteNode->QueryFloatAttribute("height", &height);
-			artAssets->Add(name, dir, width, height);
+			const char* type = animationNode->Attribute("type"); 
+			TiXmlElement* spriteNode = animationNode->FirstChildElement();
+			artAssets->AddContainer(type);
+			for(spriteNode; spriteNode; spriteNode = spriteNode->NextSiblingElement())
+			{
+				const char* key = spriteNode->Attribute("key");
+				TiXmlElement* sprite = spriteNode->FirstChildElement();
+				for(sprite; sprite; sprite = sprite->NextSiblingElement())
+				{
+					const char* id = sprite->Attribute("id");
+					const char* dir = sprite->Attribute("file");
+					float width, height;
+					sprite->QueryFloatAttribute("width", &width);
+					sprite->QueryFloatAttribute("height", &height);
+					artAssets->AddSpriteToContainer(type, key, id, dir, width, height);
+				}
+			}
+			artAssets->PostInitializeContainer(type);
 		}
 
+		
 		TiXmlElement* physicsNode = resourceRoot.FirstChild("PhysicsDefinitions").FirstChild().Element();
 		for(physicsNode; physicsNode; physicsNode = physicsNode->NextSiblingElement())
 		{
@@ -54,7 +61,6 @@ void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjec
 			physicsNode->QueryFloatAttribute("linForce", &linForce);
 			pLibrary->Add(name, type, shape, density, restitution, angDamp, linDamp, angForce, linForce);
 		}
-
 
 		gameObjects->clear();
 		pElem = hRoot.FirstChild("Layout").Element();

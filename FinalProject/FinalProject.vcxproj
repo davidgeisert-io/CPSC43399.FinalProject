@@ -73,6 +73,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ArtAssetLibrary.cpp" />
+    <ClCompile Include="Boundary.cpp" />
     <ClCompile Include="Box2DDebugDraw.cpp" />
     <ClCompile Include="Box2D\Box2D\Collision\b2BroadPhase.cpp" />
     <ClCompile Include="Box2D\Box2D\Collision\b2CollideCircle.cpp" />
@@ -132,14 +133,18 @@
     <ClCompile Include="PhysicsAssetLibrary.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerFactory.cpp" />
+    <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="SpriteContainer.cpp" />
     <ClCompile Include="TinyXml\tinystr.cpp" />
     <ClCompile Include="TinyXml\tinyxml.cpp" />
     <ClCompile Include="TinyXml\tinyxmlerror.cpp" />
     <ClCompile Include="TinyXml\tinyxmlparser.cpp" />
     <ClCompile Include="View.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArtAssetLibrary.h" />
+    <ClInclude Include="Boundary.h" />
     <ClInclude Include="Box2DDebugDraw.h" />
     <ClInclude Include="Box2D\Box2D\Box2D.h" />
     <ClInclude Include="Box2D\Box2D\Collision\b2BroadPhase.h" />
@@ -205,9 +210,12 @@
     <ClInclude Include="GameContactListener.h" />
     <ClInclude Include="PlayerFactory.h" />
     <ClInclude Include="RayCastCallback.h" />
+    <ClInclude Include="Spawner.h" />
+    <ClInclude Include="SpriteContainer.h" />
     <ClInclude Include="TinyXml\tinystr.h" />
     <ClInclude Include="TinyXml\tinyxml.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
