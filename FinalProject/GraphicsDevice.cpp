@@ -3,7 +3,7 @@
 
 GraphicsDevice::GraphicsDevice()
 {
-
+	initialized = false;
 }
 
 GraphicsDevice::~GraphicsDevice()
@@ -35,8 +35,8 @@ bool GraphicsDevice::Initialize(HWND hWnd, bool windowed)
     {
         return false;
     }
-
-    return true;
+	initialized = true;
+    return initialized;
 }
 
 void GraphicsDevice::Clear(D3DCOLOR color)

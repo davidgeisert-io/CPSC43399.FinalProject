@@ -1,5 +1,11 @@
 #include "SpriteContainer.h"
 
+SpriteContainer::SpriteContainer()
+{
+	initialized = false;
+	postInitialized = false;
+}
+
 bool SpriteContainer::Initialize(std::string id, GraphicsDevice* gDevice)
 {
 	if(!initialized)
@@ -18,8 +24,12 @@ bool SpriteContainer::PostInitialize()
 		for(auto iter = animations.begin(); iter != animations.end(); iter++)
 		{
 			GameSprite* start = iter->second;
-			GameSprite* current = start;
+			while(start->GetPreviousSprite())
+			{
+				start = start->GetPreviousSprite();
+			}
 
+			GameSprite* current = start;
 			while(current->GetNextSprite())
 			{
 				current = current->GetNextSprite();
@@ -35,7 +45,7 @@ bool SpriteContainer::PostInitialize()
 void SpriteContainer::AddSprite(std::string key, std::string id, std::string dir, float width, float height)
 {
 	GameSprite* sprite = new GameSprite();
-	sprite->Initialize(id, gDevice->device, dir, width, height);
+	sprite->Initialize(id, gDevice->GetDevice(), dir, width, height);
 
 	if (animations.find(key) == animations.end())
 	{		

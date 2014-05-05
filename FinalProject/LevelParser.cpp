@@ -69,14 +69,17 @@ void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjec
         for(gAssetNode; gAssetNode; gAssetNode=gAssetNode->NextSiblingElement())
         {
             const char *pName = gAssetNode->Attribute("name");
-            float x, y, angle;
+            float x, y, angle, width, height;
 
             gAssetNode->QueryFloatAttribute("x", &x);
             gAssetNode->QueryFloatAttribute("y", &y);
             gAssetNode->QueryFloatAttribute("angle", &angle);
+			gAssetNode->QueryFloatAttribute("width", &width);
+			gAssetNode->QueryFloatAttribute("height", &height);
+
 
             GameObject* tmp = gameAssets->Create(pName);
-            tmp->Initialize(pName, iDevice, gameObjects, gameAssets, artAssets, pLibrary, world, x, y, angle);
+            tmp->Initialize(pName, iDevice, gameObjects, gameAssets, artAssets, pLibrary, world, x, y, angle, width, height);
 			tmp->PostInitialize();
             gameObjects->push_back(tmp);
         }

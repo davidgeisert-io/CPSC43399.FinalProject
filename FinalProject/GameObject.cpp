@@ -15,6 +15,7 @@ GameObject::GameObject()
 	sprite = NULL;
 	initialized = false;
 	dead = false;
+	currentFrame = 0;
 }
 
 GameObject::~GameObject()
@@ -57,7 +58,7 @@ void GameObject::KillObject(bool isdead)
 }
 
 bool GameObject::Initialize(std::string key, InputDevice* iDevice, std::vector<GameObject*>* objects, GameAssetLibrary* gLibrary, ArtAssetLibrary* aLibrary, PhysicsAssetLibrary* pLibrary, 
-							b2World* world, float x, float y, float angle)
+							b2World* world, float x, float y, float angle, float width, float height)
 {
     this->iDevice = iDevice;
 	this->objects = objects;
@@ -84,10 +85,10 @@ bool GameObject::Initialize(std::string key, InputDevice* iDevice, std::vector<G
 	body = this->world->CreateBody(&bd);
 
 	b2PolygonShape polyShape;	
-	polyShape.SetAsBox(RW2PW((float)sprite->GetWidth()/2.0f),RW2PW((float)sprite->GetHeight()/2.0f));		
+	polyShape.SetAsBox(RW2PW(width/2.0f),RW2PW(height/2.0f));		
 
 	b2CircleShape circleShape;
-	circleShape.m_radius = RW2PW((float)sprite->GetWidth()/2.0f);
+	circleShape.m_radius = RW2PW(width/2.0f);
 
 	b2FixtureDef fixtureDef;
 	if(physics->GetShape().compare("poly")==0)

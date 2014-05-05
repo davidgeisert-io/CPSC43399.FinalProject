@@ -18,6 +18,7 @@ public:
     LPDIRECT3DDEVICE9 device;
 
 private:
+	bool initialized;
     LPDIRECT3D9 direct3d;
 };
 

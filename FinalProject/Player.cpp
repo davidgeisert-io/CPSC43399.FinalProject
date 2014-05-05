@@ -8,6 +8,8 @@ Player::Player()
 	charge = 10;
 	chargeTime = 10;
 	id = "Player";
+	this->maxSpriteFrame = 8;
+	this->lastSpriteFrame = 0;
 }
 
 GameObject* Player::Update(float gameTime)
@@ -33,6 +35,7 @@ GameObject* Player::Update(float gameTime)
 		force.x = body->GetPosition().x + RW2PW(8.0f);
 		force.y = body->GetPosition().y;
 		body->SetTransform(force, body->GetAngle());
+		CycleSprite();
 	}
 
 	if(iDevice->IsAPressed())
@@ -47,6 +50,7 @@ GameObject* Player::Update(float gameTime)
 	{
 		return Fire();
 	}
+	currentFrame++;
 	return NULL;
 }
 
@@ -89,11 +93,14 @@ GameObject* Player::Fire()
 	//	return bullet;
 
 	//}
+	currentFrame++;
 	return NULL;
 }
 
 bool Player::PostInitialize()
 {
+	spriteContainer->ChangeSpriteLoop("MoveRight");
+	sprite = spriteContainer->GetDefaultSprite();
 	return true;
 }
 
@@ -106,5 +113,9 @@ void Player::Draw(float gameTime, View* view)
 
 void Player::CycleSprite()
 {
-
+	if(currentFrame-lastSpriteFrame >= maxSpriteFrame)
+	{
+		sprite = spriteContainer->GetNextSprite();
+		lastSpriteFrame = currentFrame;
+	}	
 }

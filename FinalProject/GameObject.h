@@ -39,7 +39,7 @@ public:
 	void KillObject(bool);	
     
     bool Initialize(std::string key, InputDevice* iDevice, std::vector<GameObject*>* objects, GameAssetLibrary* gLibrary, ArtAssetLibrary* aLibrary, PhysicsAssetLibrary* pLibrary, 
-		b2World* world, float x, float y, float angle);
+		b2World* world, float x, float y, float angle, float width, float height);
 
 	virtual bool PostInitialize();
 	virtual void CycleSprite();
@@ -67,7 +67,9 @@ protected:
 	GameSprite* sprite;
 	Direction direction;
 	b2Body* body;
-	
+	int currentFrame;
+	int maxSpriteFrame;
+	int lastSpriteFrame;	
 };
 
 #endif

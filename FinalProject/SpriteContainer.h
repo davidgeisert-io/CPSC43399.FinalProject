@@ -9,7 +9,7 @@
 class SpriteContainer
 {
 public:
-	SpriteContainer(){}
+	SpriteContainer();
 	std::string GetID() {return id;}
 	void AddSprite(std::string key, std::string id, std::string dir, float width, float height);
 	GameSprite* GetCurrentSprite();
