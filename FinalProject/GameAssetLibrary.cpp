@@ -1,5 +1,7 @@
 #include "GameAssetLibrary.h"
 #include "PlayerFactory.h"
+#include "SpawnerFactory.h"
+#include "ZombieFactory.h"
 
 GameAssetLibrary::GameAssetLibrary()
 {
@@ -20,5 +22,15 @@ void GameAssetLibrary::Insert(std::string type)
 	if(type == "Player")
 	{
 		library["Player"] = (ObjectFactory*)(new PlayerFactory());
+	}
+
+	if (type == "Zombie")
+	{
+		library["Zombie"] = (ObjectFactory*)(new ZombieFactory());
+	}
+
+	if (type == "Spawner")
+	{
+		library ["Spawner"] = (ObjectFactory*)(new SpawnerFactory());
 	}
 }

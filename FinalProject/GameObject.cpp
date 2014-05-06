@@ -13,7 +13,8 @@ GameObject::GameObject()
     physics = NULL;
 	body = NULL;
 	sprite = NULL;
-	initialized = false;
+	health = 0.0f;
+	initialized =false;
 	dead = false;
 	currentFrame = 0;
 }
@@ -58,8 +59,9 @@ void GameObject::KillObject(bool isdead)
 }
 
 bool GameObject::Initialize(std::string key, InputDevice* iDevice, std::vector<GameObject*>* objects, GameAssetLibrary* gLibrary, ArtAssetLibrary* aLibrary, PhysicsAssetLibrary* pLibrary, 
-							b2World* world, float x, float y, float angle, float width, float height)
+							Environment* environment, View* view, float x, float y, float angle, float width, float height, float health)
 {
+	this->id = key;
     this->iDevice = iDevice;
 	this->objects = objects;
 
@@ -70,7 +72,11 @@ bool GameObject::Initialize(std::string key, InputDevice* iDevice, std::vector<G
     this->spriteContainer = aLibrary->Search(key);
 
 	this->physics = pLibrary->Search(key);
-	this->world = world;
+	this->environment = environment;
+	this->world = environment->GetWorld();
+	this->view = view;
+	this->health = health;
+	
 
 	b2BodyDef bd;
 

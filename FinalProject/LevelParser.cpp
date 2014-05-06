@@ -1,6 +1,7 @@
 #include "LevelParser.h"
 
-void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjects, InputDevice* iDevice, GameAssetLibrary* gameAssets, ArtAssetLibrary* artAssets, PhysicsAssetLibrary* pLibrary, b2World* world)
+void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjects, std::vector<Spawner*>* spawners, InputDevice* iDevice, GameAssetLibrary* gameAssets, ArtAssetLibrary* artAssets, PhysicsAssetLibrary* pLibrary, 
+					   b2World* world, View* view, Environment* environment)
 {
     TiXmlDocument doc(fileName);
     if (doc.LoadFile())
@@ -69,19 +70,42 @@ void LevelParser::Load(const char* fileName, std::vector<GameObject*>* gameObjec
         for(gAssetNode; gAssetNode; gAssetNode=gAssetNode->NextSiblingElement())
         {
             const char *pName = gAssetNode->Attribute("name");
-            float x, y, angle, width, height;
+            float x, y, angle, width, height, health;
 
             gAssetNode->QueryFloatAttribute("x", &x);
             gAssetNode->QueryFloatAttribute("y", &y);
             gAssetNode->QueryFloatAttribute("angle", &angle);
 			gAssetNode->QueryFloatAttribute("width", &width);
 			gAssetNode->QueryFloatAttribute("height", &height);
-
+			gAssetNode->QueryFloatAttribute("health", &health);
+			
 
             GameObject* tmp = gameAssets->Create(pName);
-            tmp->Initialize(pName, iDevice, gameObjects, gameAssets, artAssets, pLibrary, world, x, y, angle, width, height);
+            tmp->Initialize(pName, iDevice, gameObjects, gameAssets, artAssets, pLibrary, environment, view, x, y, angle, width, height, health);
 			tmp->PostInitialize();
             gameObjects->push_back(tmp);
         }
+
+		pElem = hRoot.FirstChild("Spawn").Element();
+		TiXmlHandle spawnerRoot = TiXmlHandle(pElem);
+		TiXmlElement* spawnNode = spawnerRoot.FirstChild("Spawner").Element();
+		for(spawnNode; spawnNode; spawnNode = spawnNode->NextSiblingElement())
+		{
+			const char* type = spawnNode->Attribute("type");
+			const char* position = spawnNode->Attribute("position");
+			float quantity, spawnRate, width, height, health, max, xPos;
+
+			spawnNode->QueryFloatAttribute("x", &xPos);
+			spawnNode->QueryFloatAttribute("Qty", &quantity);
+			spawnNode->QueryFloatAttribute("spawnRate", &spawnRate);
+			spawnNode->QueryFloatAttribute("width", &width);
+			spawnNode->QueryFloatAttribute("height", &height);
+			spawnNode->QueryFloatAttribute("health", &health);
+			spawnNode->QueryFloatAttribute("max", &max);
+
+			Spawner* tmp = new Spawner();
+			tmp->Initialize(type, position, xPos, gameObjects, iDevice, gameAssets, artAssets, pLibrary, environment, view, quantity, spawnRate, max, width, height, health);
+			spawners->push_back(tmp);
+		}
 	}
 }

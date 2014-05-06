@@ -13,12 +13,16 @@
 #include "InputDevice.h"
 #include "TinyXml/tinyxml.h"
 #include "GameObject.h"
+#include "View.h"
+#include "Environment.h"
+#include "Spawner.h"
 
 class LevelParser
 {
 
 public:
-    void Load(const char* fileName, std::vector<GameObject*>* gameObjects, InputDevice* iDevice, GameAssetLibrary* gameAssets, ArtAssetLibrary* artAsset, PhysicsAssetLibrary* pLibrary, b2World* world);
+    void Load(const char* fileName, std::vector<GameObject*>* gameObjects, std::vector<Spawner*>* Spawners, InputDevice* iDevice, GameAssetLibrary* gameAssets, ArtAssetLibrary* artAsset, 
+		PhysicsAssetLibrary* pLibrary, b2World* world, View* view, Environment* environment);
 };
 
 #endif

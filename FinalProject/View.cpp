@@ -1,18 +1,25 @@
 #include "View.h"
-
+#include "GameFunctions.h"
 
 View::View()
 {
     position.x = 0.0f;
     position.y = 0.0f;
     position.z = 0.0f;
+	previousPosition.x = 0.0f;
+	previousPosition.y = 0.0f;
+	previousPosition.z = 0.0f;
 
     center.x = 0.0f;
     center.y = 0.0f;
     center.z = 0.0f;
 
-    angle = 0.0;
+	screenDimensions.x = 0.0f;
+	screenDimensions.y= 0.0f;
+	screenDimensions.z = 0.0f;
 
+    angle = 0.0;
+	otEnabled = false;
     isInitialized = false;
 }
 
@@ -21,11 +28,14 @@ View::~View()
 
 }
 
-bool View::Initialize(float xCenter, float yCenter, float angle)
+bool View::Initialize(float screenWidth, float screenHeight, float angle)
 {
-    center.x = xCenter;
-    center.y = yCenter;
+	screenDimensions.x = screenWidth;
+	screenDimensions.y = screenHeight;
+    center.x = screenWidth/2;
+    center.y = screenHeight/2;
     center.z = 0.0f;
+	xOffset = center.x - position.x;
     this->angle = 0.0f;
     return true;
     return(isInitialized);
@@ -33,56 +43,29 @@ bool View::Initialize(float xCenter, float yCenter, float angle)
 
 void View::Update(float GameTime, InputDevice* iDevice)
 {
-    if(iDevice->IsLeftArrowPressed())
-    {
-        position.x -= 2.0f;
-    }
-
-    if(iDevice->IsRightArrowPressed())
-    {
-        position.x += 2.0f;
-    }
-
-    if(iDevice->IsUpArrowPressed() || iDevice->IsDownArrowPressed())
-    {
-        
-        D3DXVECTOR3 XCoord;
-        XCoord.x = 0.0;
-        XCoord.y = -1.0;
-        XCoord.z = 0.0;
-
-        D3DXMATRIX mat;
-        D3DXMatrixRotationZ(&mat, angle);
-                
-        D3DXVECTOR3 RotCoord;
-        D3DXVec3TransformCoord(&RotCoord, &XCoord, &mat);
-
-        float scale = 3.0;
-        RotCoord *= scale;
-
-        position = iDevice->IsUpArrowPressed() 
-			? position + RotCoord 
-            : position - RotCoord;
-
-    }
-}
-
-D3DXVECTOR3 View::GetPosition()
-{
-    return position;
-}
-
-D3DXVECTOR3 View::GetCenter()
-{ 
-    return center;
-}
-
-float View::GetAngle()
-{
-    return angle;
+	if(otEnabled)
+	{
+		TrackObject();
+	}
 }
 
 bool View::IsInitialized()
 {
     return(isInitialized);
+}
+
+void View::SetObjectTracking(b2Body* body)
+{
+	trackedBody = body;
+	otEnabled = true;
+}
+
+void View::TrackObject()
+{
+	float xPos = PW2RW(trackedBody->GetPosition().x);
+	if(xPos >= 0)
+	{
+		previousPosition = position;
+		position.x = xPos;
+	}
 }

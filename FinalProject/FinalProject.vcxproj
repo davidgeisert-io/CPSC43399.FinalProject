@@ -121,6 +121,7 @@
     <ClCompile Include="Box2D\Box2D\Dynamics\Joints\b2WeldJoint.cpp" />
     <ClCompile Include="Box2D\Box2D\Dynamics\Joints\b2WheelJoint.cpp" />
     <ClCompile Include="Box2D\Box2D\Rope\b2Rope.cpp" />
+    <ClCompile Include="Environment.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameAssetLibrary.cpp" />
     <ClCompile Include="GameObject.cpp" />
@@ -134,6 +135,7 @@
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="PlayerFactory.cpp" />
     <ClCompile Include="Spawner.cpp" />
+    <ClCompile Include="SpawnerFactory.cpp" />
     <ClCompile Include="SpriteContainer.cpp" />
     <ClCompile Include="TinyXml\tinystr.cpp" />
     <ClCompile Include="TinyXml\tinyxml.cpp" />
@@ -141,6 +143,7 @@
     <ClCompile Include="TinyXml\tinyxmlparser.cpp" />
     <ClCompile Include="View.cpp" />
     <ClCompile Include="Zombie.cpp" />
+    <ClCompile Include="ZombieFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ArtAssetLibrary.h" />
@@ -210,12 +213,15 @@
     <ClInclude Include="GameContactListener.h" />
     <ClInclude Include="PlayerFactory.h" />
     <ClInclude Include="RayCastCallback.h" />
+    <ClInclude Include="SearchNode.h" />
     <ClInclude Include="Spawner.h" />
+    <ClInclude Include="SpawnerFactory.h" />
     <ClInclude Include="SpriteContainer.h" />
     <ClInclude Include="TinyXml\tinystr.h" />
     <ClInclude Include="TinyXml\tinyxml.h" />
     <ClInclude Include="View.h" />
     <ClInclude Include="Zombie.h" />
+    <ClInclude Include="ZombieFactory.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

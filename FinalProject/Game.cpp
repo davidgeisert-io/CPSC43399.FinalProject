@@ -97,7 +97,7 @@ bool Game::Initialize(HWND hWnd, HINSTANCE hInstance, int width, int height)
 
 
 	gameView = new View();
-	if(!gameView->Initialize(640, 360, 0.0f))
+	if(!gameView->Initialize(width, height, 0.0f))
 	{
 		return false;
 	}	
@@ -117,6 +117,12 @@ bool Game::Initialize(HWND hWnd, HINSTANCE hInstance, int width, int height)
 		world->SetDebugDraw(debugDraw);
 	}
 
+	environment = new Environment();
+	if(!environment->Initialize(world))
+	{
+		return false;
+	}
+
 	levelParser = new LevelParser();
 	if(!LoadLevel())
 	{
@@ -124,6 +130,7 @@ bool Game::Initialize(HWND hWnd, HINSTANCE hInstance, int width, int height)
 	}
 
 	world->SetContactListener(&gcl);
+	environment->PostInitialize();
 
 	return true;
 
@@ -131,7 +138,7 @@ bool Game::Initialize(HWND hWnd, HINSTANCE hInstance, int width, int height)
 
 bool Game::LoadLevel()
 {
-	levelParser->Load("level.xml", &gameObjects, iDevice, gameInventory, artAssets, pLibrary, world);
+	levelParser->Load("level.xml", &gameObjects, &spawners, iDevice, gameInventory, artAssets, pLibrary, world, gameView, environment);
 	if(!gameObjects.size() > 0)
 	{
 		return false;
@@ -179,6 +186,18 @@ void Game::Update()
 			}
 		}
 
+		for(auto spawner = spawners.begin(); spawner != spawners.end(); spawner++)
+		{
+			if((*spawner) && (*spawner)->IsInitialized())
+			{
+				GameObject* newObject = (*spawner)->Update(gameTime);
+				if(newObject != NULL)
+				{
+					newObjects.push_back(newObject);
+				}
+			}
+		}
+
 		for(auto object = newObjects.begin(); object != newObjects.end(); object++)
 		{
 			gameObjects.push_back(*object);
@@ -187,7 +206,7 @@ void Game::Update()
 		DeleteObjects();
 		world->Step(1.0f/60.0f, 6, 2);
 	}
-	
+
 }
 
 void Game::DeleteObjects()
@@ -202,6 +221,19 @@ void Game::DeleteObjects()
 		else
 		{
 			object++;
+		}
+	}
+
+	for (auto spawner = spawners.begin(); spawner != spawners.end();)
+	{
+		if((*spawner)->IsDead())
+		{
+			delete (*spawner);
+			spawner = spawners.erase(spawner);
+		}
+		else
+		{
+			spawner++;
 		}
 	}
 }

@@ -5,6 +5,7 @@
 
 #include<cmath>
 #include<d3dx9.h>
+#include <Box2D/Box2D.h>
 #include "InputDevice.h"
 
 class View
@@ -16,18 +17,29 @@ public:
     bool IsInitialized();
     
     void Update(float GameTime, InputDevice* iDevice);
+	void SetObjectTracking(b2Body* body);
+	void TrackObject();
 
-    D3DXVECTOR3 GetPosition();
-    D3DXVECTOR3 GetCenter();
-    float GetAngle();
+	D3DXVECTOR3 GetPosition(){return position;}
+	D3DXVECTOR3 GetPreviousPosition(){return previousPosition;}
+    D3DXVECTOR3 GetCenter(){return center;}
+    D3DXVECTOR3 GetScreenDimensions(){return screenDimensions;}
+
+    float GetAngle(){return angle;}
+
 
 private:
     D3DXVECTOR3 position;
+	D3DXVECTOR3 previousPosition;
     D3DXVECTOR3 center;
-    float angle;
-    float theta;
+	D3DXVECTOR3 screenDimensions;
 
+	float xOffset;
+    float angle;
+	b2Body* trackedBody;
+	
     bool isInitialized;
+	bool otEnabled;
 };
 
 #endif

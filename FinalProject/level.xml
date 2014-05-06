@@ -3,6 +3,7 @@
 	<Resources>
 		<Factories>			
 			<Factory type="Player"/>
+			<Factory type="Zombie"/>
 		</Factories>
 		<Animations>
 			<Animation type="Player">
@@ -13,13 +14,22 @@
 					<Sprite id="Step3" file = "./Images/stance4.png" width="75" height="126"/>
 				</Sprites>
 			</Animation>
+			<Animation type = "Zombie">
+				<Sprites key="MoveLeft">
+					<Sprite id="Default" file = "./Images/zombie_0.png" width="75" height="126"/>
+				</Sprites>
+			</Animation>
 		</Animations>
 		<PhysicsDefinitions>
 			<Definition name="Player" type="dynamic" shape="poly" density="1.0f" restitution="0.3f" angDamp="10.0f" linDamp="3.0f" angForce="1.0f" linForce="0.2f"/>
+			<Definition name="Zombie" type="dynamic" shape="poly" density="0.05f" restitution="0.3f" angDamp="10.0f" linDamp="3.0f" angForce="1.0f" linForce="0.2f"/>
 		</PhysicsDefinitions>
 	</Resources>
 	<Layout>
     		<!-- Object Layout for Game 	-->
-    	<GameAsset name="Player" x="-600.0f" y="300.0f"angle="0.0f" width="75" height="126"/>
+    	<GameAsset name="Player" x="-600.0f" y="300.0f"angle="0.0f" width="75" height="126" health="10.0f"/>
 	</Layout>
+	<Spawn>
+		<Spawner type = "Zombie" position="Right" x = "645" Qty="1.0f" spawnRate="200.0f" max="2" width="75" height="126" health="10.0f"/>
+	</Spawn>
 </Level>

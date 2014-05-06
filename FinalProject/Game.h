@@ -13,6 +13,8 @@
 #include "GameContactListener.h"
 #include "Box2DDebugDraw.h"
 #include "Boundary.h"
+#include "Environment.h"
+#include "Spawner.h"
 
 class Game
 {
@@ -44,6 +46,7 @@ private:
 
 	View* gameView;
     std::vector<GameObject*> gameObjects;
+	std::vector<Spawner*> spawners;
 
 	const b2Vec2 gravity;
 	b2World* world;
@@ -58,6 +61,7 @@ private:
 	GameContactListener gcl;
 	Box2DDebugDraw* debugDraw;
 	Boundary* boundary;
+	Environment* environment;
 
 	void TogglePause();
 };

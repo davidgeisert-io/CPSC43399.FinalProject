@@ -11,6 +11,7 @@
 #include "Definitions.h"
 #include "GamePhysics.h"
 #include "SpriteContainer.h"
+#include "Environment.h"
 
 class GameAssetLibrary;
 class ArtAssetLibrary;
@@ -39,7 +40,7 @@ public:
 	void KillObject(bool);	
     
     bool Initialize(std::string key, InputDevice* iDevice, std::vector<GameObject*>* objects, GameAssetLibrary* gLibrary, ArtAssetLibrary* aLibrary, PhysicsAssetLibrary* pLibrary, 
-		b2World* world, float x, float y, float angle, float width, float height);
+		Environment* environment, View* view, float x, float y, float angle, float width, float height, float health);
 
 	virtual bool PostInitialize();
 	virtual void CycleSprite();
@@ -58,8 +59,9 @@ protected:
 	std::vector<GameObject*>* objects;
 	GamePhysics* physics;
 	bool initialized;
+	Environment* environment;
 	b2World* world;
-
+	View* view;
 	std::string id;
 	bool dead;
 
@@ -67,9 +69,11 @@ protected:
 	GameSprite* sprite;
 	Direction direction;
 	b2Body* body;
+
 	int currentFrame;
 	int maxSpriteFrame;
-	int lastSpriteFrame;	
+	int lastSpriteFrame;
+	float health;
 };
 
 #endif

@@ -4,6 +4,8 @@
 #include<map>
 #include "GameObject.h"
 #include "Player.h"
+#include "Spawner.h"
+#include "Zombie.h"
 
 class ObjectFactory
 {

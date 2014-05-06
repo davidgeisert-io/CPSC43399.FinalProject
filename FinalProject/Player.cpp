@@ -46,10 +46,11 @@ GameObject* Player::Update(float gameTime)
 		body->SetTransform(force, body->GetAngle());
 	}
 
-	if((iDevice->IsSpacePressed()) & (charge>=chargeTime))
-	{
-		return Fire();
-	}
+	//if((iDevice->IsSpacePressed()) & (charge>=chargeTime))
+	//{
+	//	return Fire();
+	//}
+
 	currentFrame++;
 	return NULL;
 }
@@ -80,7 +81,7 @@ GameObject* Player::Fire()
 	initPosition.x = bGradient.x*offset + PW2RW(body->GetPosition().x);
 	initPosition.y = bGradient.y*offset + PW2RW(body->GetPosition().y);
 		
-	std::string key("Bullet");
+	//std::string key("Bullet");
 	//GameObject* bullet = gLibrary->Create(key);
 
 	//if(bullet->Initialize(key, iDevice, objects, gLibrary, aLibrary, pLibrary, world, initPosition.x, initPosition.y, body->GetAngle()))
@@ -101,10 +102,9 @@ bool Player::PostInitialize()
 {
 	spriteContainer->ChangeSpriteLoop("MoveRight");
 	sprite = spriteContainer->GetDefaultSprite();
+	view->SetObjectTracking(this->body);
 	return true;
 }
-
-
 
 void Player::Draw(float gameTime, View* view)
 {
